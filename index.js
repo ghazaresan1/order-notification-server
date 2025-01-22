@@ -51,6 +51,7 @@ async function authenticateUser(username, password) {
 
 // Check orders function
 async function checkOrders(username, password, fcmToken) {
+console.log('Checking orders for user:', username);
     const user = activeUsers.get(fcmToken);
     if (!user) return;
 
@@ -113,6 +114,7 @@ function startChecking(fcmToken) {
 
 // Register endpoint
 app.post('/register', async (req, res) => {
+ console.log('Received registration request:', req.body);
     const { username, password, fcmToken } = req.body;
     
     try {
