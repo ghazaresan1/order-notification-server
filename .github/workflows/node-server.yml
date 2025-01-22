@@ -14,9 +14,11 @@ jobs:
         with:
           node-version: '14.x'
       - name: Create .env file
+        env:
+          FIREBASE_CREDS: ${{ secrets.FIREBASE_CREDENTIALS }}
         run: |
           echo "PORT=3000" > .env
           echo "FIREBASE_PROJECT_ID=${{ secrets.FIREBASE_PROJECT_ID }}" >> .env
-          echo 'FIREBASE_CREDENTIALS='"'"${{ secrets.FIREBASE_CREDENTIALS }}"'"'' >> .env
+          echo "FIREBASE_CREDENTIALS=${FIREBASE_CREDS}" >> .env
       - run: npm install
       - run: npm start
