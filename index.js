@@ -1,4 +1,3 @@
-console.log('Server starting up...');
 require('dotenv').config();
 const express = require('express');
 const admin = require('firebase-admin');
@@ -52,7 +51,6 @@ async function authenticateUser(username, password) {
 
 // Check orders function
 async function checkOrders(username, password, fcmToken) {
-console.log(`⏰ Checking orders for ${username} at ${new Date().toISOString()}`);
     const user = activeUsers.get(fcmToken);
     if (!user) return;
 
@@ -115,9 +113,8 @@ function startChecking(fcmToken) {
 
 // Register endpoint
 app.post('/register', async (req, res) => {
- console.log('🔥 New registration request received:', req.body);
     const { username, password, fcmToken } = req.body;
-     console.log(`Processing registration for user: ${username}`);
+    
     try {
         const authResponse = await authenticateUser(username, password);
         if (!authResponse.success) {
@@ -151,30 +148,7 @@ app.post('/unregister', (req, res) => {
     res.json({ success: true });
 });
 
-// Add this new endpoint to handle GitHub repository dispatch events
-app.post('/dispatch', (req, res) => {
-    console.log('📨 Received dispatch event:', req.body);
-    const { event_type, client_payload } = req.body;
-    
-    if (event_type === 'register') {
-        const { username, password, fcmToken } = client_payload;
-        console.log(`👤 Processing registration for: ${username}`);
-        // Your existing registration logic
-    }
-    
-    res.status(200).json({ message: 'Event received' });
-});
-// Add health check endpoint
-app.get('/health', (req, res) => {
-    res.json({
-        status: 'healthy',
-        uptime: process.uptime(),
-        timestamp: new Date().toISOString()
-    });
-});
-
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-    console.log(`🚀 Server running on port ${PORT}`);
-    console.log('Ready to handle requests!');
+    console.log(`Server running on port ${PORT}`);
 });
