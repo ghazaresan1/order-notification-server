@@ -3,6 +3,8 @@ name: Node.js Server
 on:
   push:
     branches: [ main ]
+  repository_dispatch:
+    types: [register, unregister]
 
 jobs:
   deploy:
