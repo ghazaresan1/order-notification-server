@@ -1,3 +1,4 @@
+console.log('Server starting up...');
 require('dotenv').config();
 const express = require('express');
 const admin = require('firebase-admin');
@@ -51,7 +52,7 @@ async function authenticateUser(username, password) {
 
 // Check orders function
 async function checkOrders(username, password, fcmToken) {
-console.log('Checking orders for user:', username);
+console.log(`⏰ Checking orders for ${username} at ${new Date().toISOString()}`);
     const user = activeUsers.get(fcmToken);
     if (!user) return;
 
@@ -114,9 +115,9 @@ function startChecking(fcmToken) {
 
 // Register endpoint
 app.post('/register', async (req, res) => {
- console.log('Received registration request:', req.body);
+ console.log('🔥 New registration request received:', req.body);
     const { username, password, fcmToken } = req.body;
-    
+     console.log(`Processing registration for user: ${username}`);
     try {
         const authResponse = await authenticateUser(username, password);
         if (!authResponse.success) {
@@ -152,5 +153,6 @@ app.post('/unregister', (req, res) => {
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
+    console.log(`🚀 Server running on port ${PORT}`);
+    console.log('Ready to handle requests!');
 });
