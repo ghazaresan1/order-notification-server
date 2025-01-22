@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Unregister Endpoint</title>
+    <script>
+        async function handleRequest(event) {
+            event.preventDefault();
+            const data = await request.json();
+            return { success: true, message: "Unregistered successfully" };
+        }
+    </script>
+</head>
+<body>
+    <div id="response"></div>
+</body>
+</html>
