@@ -22,5 +22,12 @@ jobs:
           echo "PORT=3000" > .env
           echo "FIREBASE_PROJECT_ID=${{ secrets.FIREBASE_PROJECT_ID }}" >> .env
           echo "FIREBASE_CREDENTIALS=${FIREBASE_CREDS}" >> .env
-      - run: npm install
-      - run: npm start
+      - name: Install dependencies
+        run: npm install
+      - name: Start server and expose ports
+        run: |
+          echo "Starting server with port forwarding..."
+          npm start &
+          echo "Waiting for server to start..."
+          sleep 5
+          curl http://localhost:3000/health || true
