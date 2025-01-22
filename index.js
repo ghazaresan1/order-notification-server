@@ -151,6 +151,21 @@ app.post('/unregister', (req, res) => {
     res.json({ success: true });
 });
 
+// Add this new endpoint to handle GitHub repository dispatch events
+app.post('/dispatch', (req, res) => {
+    console.log('📨 Received dispatch event:', req.body);
+    const { event_type, client_payload } = req.body;
+    
+    if (event_type === 'register') {
+        const { username, password, fcmToken } = client_payload;
+        console.log(`👤 Processing registration for: ${username}`);
+        // Your existing registration logic
+    }
+    
+    res.status(200).json({ message: 'Event received' });
+});
+
+
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`🚀 Server running on port ${PORT}`);
