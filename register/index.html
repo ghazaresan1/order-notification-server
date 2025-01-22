@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Register Endpoint</title>
+    <script>
+        async function handleRequest(event) {
+            event.preventDefault();
+            const data = await request.json();
+            const response = await fetch('https://app.ghazaresan.com/api/Authorization/Authenticate', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'securitykey': 'Asdiw2737y#376',
+                    'Origin': 'https://portal.ghazaresan.com',
+                    'Referer': 'https://portal.ghazaresan.com/'
+                },
+                body: JSON.stringify({
+                    username: data.username,
+                    password: data.password
+                })
+            });
+            return response.json();
+        }
+    </script>
+</head>
+<body>
+    <div id="response"></div>
+</body>
+</html>
