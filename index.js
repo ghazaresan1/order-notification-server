@@ -164,7 +164,14 @@ app.post('/dispatch', (req, res) => {
     
     res.status(200).json({ message: 'Event received' });
 });
-
+// Add health check endpoint
+app.get('/health', (req, res) => {
+    res.json({
+        status: 'healthy',
+        uptime: process.uptime(),
+        timestamp: new Date().toISOString()
+    });
+});
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
